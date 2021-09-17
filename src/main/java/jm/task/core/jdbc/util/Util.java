@@ -26,10 +26,6 @@ public class Util {
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "root");
 
-//                settings.put(Environment.SHOW_SQL, "true");
-//                settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-//                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
-
                 configuration.setProperties(settings);
                 configuration.addAnnotatedClass(User.class);
 
@@ -37,17 +33,20 @@ public class Util {
                         .applySettings(configuration.getProperties()).build();
 
                 sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-                System.out.println("Session is open!");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-//        } else {
-//            sessionFactory.close();
         }
 
         return sessionFactory;
     }
 
+    public static SessionFactory sessionFactoryNul() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
+        }
+        return null;
+    }
 
     public static Connection getConnection(){
         try {
