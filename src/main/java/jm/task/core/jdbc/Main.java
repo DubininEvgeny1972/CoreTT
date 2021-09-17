@@ -16,7 +16,7 @@ public class Main {
         service.saveUser("Jon", "Lennon", (byte) 35);
         service.saveUser("Bob", "Dillan", (byte) 52);
         service.saveUser("Kirk", "Duglas", (byte) 48);
-        UserDaoHibernateImpl us = new UserDaoHibernateImpl();
+//        UserDaoHibernateImpl us = new UserDaoHibernateImpl();
 
 //        System.out.println(service.getAllUsers());
 

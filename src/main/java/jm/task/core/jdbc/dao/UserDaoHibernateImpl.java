@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -15,38 +16,34 @@ public class UserDaoHibernateImpl implements UserDao {
 
     }
 
-
     @Override
     public void createUsersTable() throws SQLException {
         Session session = Util.getSessionFactory().openSession();
-        // start the transaction
         session.beginTransaction();
-        // create table User
-        session.createSQLQuery("CREATE TABLE USER " +
-                    "(id INT, " +
-                    "NAME VARCHAR(20) not null, " +
-                    "LASTNAME VARCHAR(20) not null, " +
-                    "AGE INT not null);");
+
+        String sql = "CREATE TABLE IF NOT EXISTS user " +
+                "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                "name VARCHAR(20) NOT NULL, lastName VARCHAR(20) NOT NULL, " +
+                "age TINYINT NOT NULL)";
+
+        Query query = session.createSQLQuery(sql).addEntity(User.class);
         System.out.println("Table is created!");
-        // commit transction
+        query.executeUpdate();
         session.getTransaction().commit();
-//        session.close();
+        session.close();
     }
 
     @Override
     public void dropUsersTable() throws SQLException {
         Session session = Util.getSessionFactory().openSession();
-        // start the transaction
         Transaction transaction = session.beginTransaction();
-        // droup table User
-//        if(statement.executeUpdate("CHECK TABLE USER") == -1) {
-            session.createSQLQuery("DROP TABLE USER");
-//        }
 
-        // commit transction
-        System.out.println("Table droup!");
+        String sql = "DROP TABLE IF EXISTS user";
+
+        Query query = session.createSQLQuery(sql).addEntity(User.class);
+        query.executeUpdate();
         transaction.commit();
-//        session.close();
+        session.close();
     }
 
     @Override
