@@ -27,8 +27,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 "lastName VARCHAR(20) NOT NULL, " +
                 "age TINYINT NOT NULL)";
 
-        Query query = session.createSQLQuery(sql).addEntity(User.class);
-        query.executeUpdate();
+        session.createSQLQuery(sql).addEntity(User.class).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
@@ -38,8 +37,7 @@ public class UserDaoHibernateImpl implements UserDao {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
         String sql = "DROP TABLE IF EXISTS user";
-        Query query = session.createSQLQuery(sql).addEntity(User.class);
-        query.executeUpdate();
+        session.createSQLQuery(sql).addEntity(User.class).executeUpdate();
         transaction.commit();
         session.close();
     }
@@ -85,10 +83,7 @@ public class UserDaoHibernateImpl implements UserDao {
     public void cleanUsersTable() {
         Session session = Util.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        final List<User> listUser = getAllUsers();
-        for (User user : listUser) {
-            session.delete(user);
-        }
+        session.createQuery("delete from User").executeUpdate();
         transaction.commit();
         session.close();
     }
