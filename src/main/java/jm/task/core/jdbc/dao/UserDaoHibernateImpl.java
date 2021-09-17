@@ -57,13 +57,8 @@ public class UserDaoHibernateImpl implements UserDao {
         user.setAge(age);
         user.setId((long) idd);
         idd++;
-        // auto close session object
-            // start the transaction
-
-            // save student object
         session.save(user);
         System.out.println("User с именем – " + name + " добавлен в базу данных");
-            // commit transction
         transaction.commit();
         session.close();
     }
@@ -72,27 +67,20 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         Session session = Util.getSessionFactory().openSession();
         System.out.println("Delete User!");
-        Transaction tx1 = session.beginTransaction();
+        Transaction transaction = session.beginTransaction();
         session.delete(session.get(User.class, id));
-        tx1.commit();
-//        session.close();
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public List getAllUsers() throws SQLException {
         Session session = Util.getSessionFactory().openSession();
-//        Session session = Util.getSessionFactory().openSession();
-//        Transaction tx1 = session.beginTransaction();
-////        List<User> user = session.createQuery("from User ").list();
-////        for (User us: user) {
-////            System.out.println(us);
-////        }
-////
-//        List users = session.createCriteria(User.class).list();
-////        System.out.println(user);
-//        tx1.commit();
-//        session.close();
-        return Util.getSessionFactory().openSession().createCriteria(User.class).list();
+        Transaction transaction = session.beginTransaction();
+        List<User> user = session.createQuery("from User ").list();
+        transaction.commit();
+        session.close();
+        return user;
     }
 
     @Override

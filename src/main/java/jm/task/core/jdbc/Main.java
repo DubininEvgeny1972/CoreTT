@@ -18,10 +18,10 @@ public class Main {
         service.saveUser("Kirk", "Duglas", (byte) 48);
 //        UserDaoHibernateImpl us = new UserDaoHibernateImpl();
 
-//        System.out.println(service.getAllUsers());
+        System.out.println(service.getAllUsers());
 
-//        service.removeUserById(2L);
-//        System.out.println(service.getAllUsers());
+        service.removeUserById(2L);
+        System.out.println(service.getAllUsers());
 
 //        service.cleanUsersTable();
 //        System.out.println(service.getAllUsers());
