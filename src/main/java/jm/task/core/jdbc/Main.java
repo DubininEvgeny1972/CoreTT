@@ -10,7 +10,6 @@ public class Main {
     public static List<User> listUser = new ArrayList<>();
     public static void main(String[] args) throws SQLException {
         UserServiceImpl service = new UserServiceImpl();
-//        service.dropUsersTable();
         service.createUsersTable();
         service.saveUser("Ivan", "Ivanov", (byte) 25);
         service.saveUser("Jon", "Lennon", (byte) 35);
@@ -26,5 +25,6 @@ public class Main {
         System.out.println(service.getAllUsers());
 
         service.dropUsersTable();
+
     }
 }
